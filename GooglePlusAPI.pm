@@ -81,7 +81,7 @@ use feature qw( say );
 		}else{
 			die "set correct options";
 		}
-		say "\n";
+#		say "\n";
 		$self->{access_url} = $access_url;
 		return;
 	}
