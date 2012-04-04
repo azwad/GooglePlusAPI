@@ -1,0 +1,37 @@
+#!/usr/bin/perl
+
+use lib qw(/home/toshi/perl/lib);
+use strict;
+use HashDump;
+use GooglePlusAPI;
+use feature qw(say);
+
+#usage get_gplus > dump.txt
+
+my $pit_account = 'GooglePlus';
+my $gplus = GooglePlusAPI->new();
+$gplus->pit_account($pit_account);
+my %option = (
+	'get_type'	=> 'get_post', # 'get_post', 'profile', 'post_datail' with  'post_id'
+	'post_id'		=> '',
+);
+$gplus->set_option(%option);
+my $res = $gplus->get;
+#HashDump->load($res); 
+
+foreach my $var (@$res) {
+	my  $post_id = $var->{id};
+
+	my %new_option = (
+		'get_type' => 'post_detail',
+		'post_id'	 => $post_id,
+	);
+
+	$gplus->set_option(%new_option);
+	my $post_detail = $gplus->get;
+	HashDump->load($post_detail);
+}
+
+
+
+
